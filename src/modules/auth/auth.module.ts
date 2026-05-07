@@ -7,10 +7,12 @@ import { JwtModule } from '@nestjs/jwt';
 import {RolesGuard} from '../../guards/roles.guard';
 import {OrganizationModule} from '../../modules/organization-module/organization-module.module';
 import {OrganizationModuleService} from '../../modules/organization-module/organization-module.service';
+import { MockDatabaseModule } from '../../config/mock-db.module';
 import envConfig from '../../../env.config';
 
 @Module({
   imports: [
+    MockDatabaseModule,
     JwtModule.register({
       secret: envConfig.JWT_SECRET
     }),

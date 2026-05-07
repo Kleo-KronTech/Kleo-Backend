@@ -1,4 +1,4 @@
-import { throwNotFound } from '@common/exceptions/not-found.exception';
+import { throwNotFound } from '../../common/exceptions/not-found.exception';
 
 export async function firstRowOrThrow<T>(promise: Promise<T[]>): Promise<T> {
   const row = (await promise)[0];
