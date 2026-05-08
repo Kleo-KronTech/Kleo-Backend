@@ -4,10 +4,10 @@ import { AuthenticatedGuard } from './guards/authenticated.guard';
 import { AuthModule } from './modules/auth/auth.module';
 import { LocalStorageModule } from './config/local-storage.module';
 import { OrganizationModule } from './modules/organization-module/organization-module.module';
-import { MockDatabaseModule } from './config/mock-db.module';
+import { DatabaseModule } from './config/database.module';
 
 @Module({
-  imports: [MockDatabaseModule, LocalStorageModule, AuthModule, OrganizationModule],
+  imports: [DatabaseModule, LocalStorageModule, AuthModule, OrganizationModule],
   providers: [
     {
       provide: APP_GUARD,

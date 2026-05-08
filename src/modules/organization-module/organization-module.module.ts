@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { OrganizationModuleService } from './organization-module.service';
 import { OrganizationModuleController } from './organization-module.controller';
 import { RolesGuard } from '../../guards/roles.guard';
-import { MockDatabaseModule } from '../../config/mock-db.module';
+import { DatabaseModule } from 'src/config/database.module';
 
 @Module({
-  imports: [MockDatabaseModule],
+  imports: [DatabaseModule],
   controllers: [OrganizationModuleController],
   providers: [OrganizationModuleService, RolesGuard]
 })

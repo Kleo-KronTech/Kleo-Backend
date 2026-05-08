@@ -55,22 +55,38 @@ export class AuthService extends CommonService {
   }
 
   async registerOrgAdmin(registerDto: RegisterDto) {
-    try {
-      await this.db.insert(users).values({
-        email: registerDto.email,
-        password: await BcryptUtils.hashPassword(registerDto.password),
-        firstName: registerDto.firstName,
-        lastName: registerDto.lastName,
-        userName: registerDto.username,
-        role: Roles.OrganizationAdmin
-      });
-    } catch (e) {
-      if (typeof e === 'object' && e !== null && 'code' in e && (e as any).code === '23505') {
-        throwConflictException('Email already in use');
-      }
-      throw new InternalServerErrorException();
+  try {
+    const user = {
+      id: crypto.randomUUID(),
+      email: registerDto.email,
+      password: await BcryptUtils.hashPassword(registerDto.password),
+      firstName: registerDto.firstName,
+      lastName: registerDto.lastName,
+      userName: registerDto.username,
+      role: Roles.OrganizationAdmin,
+    };
+
+    await this.db.insert(users).values(user);
+
+    return {
+      message: 'User created successfully',
+      user,
+    };
+  } catch (e) {
+    if (
+      typeof e === 'object' &&
+      e !== null &&
+      'code' in e &&
+      (e as any).code === '23505'
+    ) {
+      throwConflictException('Email already in use');
     }
+
+    console.error(e);
+
+    throw new InternalServerErrorException();
   }
+}
 
   async registerLocManager(locManDto: LocManDto) {
     const org = await this.orgService.findOne(locManDto.organizationName);

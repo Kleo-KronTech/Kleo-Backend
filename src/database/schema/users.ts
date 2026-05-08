@@ -12,7 +12,7 @@ export const userRoleEnum = pgEnum('user_role', [Roles.EndUser, Roles.LocationMa
 export const users = pgTable('users', {
   id: integer('id').primaryKey().generatedAlwaysAsIdentity(),
   email: text('email').notNull().unique(),
-  password: text('password_hash').notNull(),
+  password: text('password').notNull(),
   firstName: text('first_name').notNull(),
   lastName: text('last_name').notNull(),
   userName: text('username').notNull().unique(),
