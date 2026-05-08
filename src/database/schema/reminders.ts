@@ -1,15 +1,20 @@
-import { pgTable, integer, text, uuid } from 'drizzle-orm/pg-core';
+import {
+  pgTable,
+  uuid,
+  text,
+  timestamp,
+} from "drizzle-orm/pg-core";
 
-export const reminders = pgTable('reminders', {
-  id: uuid('id').primaryKey().defaultRandom(),
+export const reminders = pgTable("reminders", {
+  id: uuid("id").defaultRandom().primaryKey(),
 
-  text: text('text').notNull(),
+  text: text("text").notNull(),
 
-  date: integer('date').notNull(),
+  reminderDate: timestamp("reminder_date").notNull(),
 
-  time: text('time').notNull(),
+  category: text("category").notNull(),
 
-  category: text('category').notNull(),
+  repeatDays: text("repeat_days").array().default([]),
 
-  repeatDays: text('repeat_days').array().default([]),
+  createdAt: timestamp("created_at").defaultNow(),
 });

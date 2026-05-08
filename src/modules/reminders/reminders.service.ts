@@ -6,30 +6,24 @@ import { reminders } from '../../database/schema/reminders';
 @Injectable()
 export class RemindersService extends CommonService {
   
-  async create(dto: CreateReminderDto) {
-    try {
-      const id = crypto.randomUUID();
+  async create(createReminderDto: CreateReminderDto) {
+  try {
+    await this.db.insert(reminders).values({
+      text: createReminderDto.text,
+      reminderDate: new Date(createReminderDto.reminderDate),
+      category: createReminderDto.category,
+      repeatDays: createReminderDto.repeatDays,
+    });
 
-      const reminder = {
-        id,
-        text: dto.text,
-        date: dto.date,
-        time: dto.time,
-        category: dto.category,
-        repeatDays: dto.repeatDays ?? [],
-      };
+    return {
+      message: "Reminder created successfully",
+    };
 
-      await this.db.insert(reminders).values(reminder);
-
-      return {
-        message: 'Reminder created successfully',
-        reminder,
-      };
-    } catch (e) {
-      console.error('Create reminder error:', e);
-      throw new InternalServerErrorException();
-    }
+  } catch (error) {
+    console.error("Create reminder error:", error);
+    throw new InternalServerErrorException();
   }
+}
 
   async findAll() {
     try {
