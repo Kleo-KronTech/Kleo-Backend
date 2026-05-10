@@ -6,9 +6,10 @@ import { LocalStorageModule } from './config/local-storage.module';
 import { OrganizationModule } from './modules/organization-module/organization-module.module';
 import { DatabaseModule } from './config/database.module';
 import { RemindersModule } from './modules/reminders/reminders.module';
+import { MessagesModule } from './modules/messages/messages.module';
 
 @Module({
-  imports: [DatabaseModule, LocalStorageModule, AuthModule, RemindersModule, OrganizationModule],
+  imports: [DatabaseModule, LocalStorageModule, AuthModule, RemindersModule, OrganizationModule, MessagesModule],
   providers: [
     {
       provide: APP_GUARD,
